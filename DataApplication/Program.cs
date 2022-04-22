@@ -9,49 +9,102 @@ namespace DataApplication
     class Program
     {
         static void Main(string[] args)
-        {
-			Console.WriteLine("Enter Date dd/mm/yyyy Format");
-			
-			try
-			{
-				string dateval = Console.ReadLine();
-				string[] arr = dateval.Split('/');
-				int day = Convert.ToInt32(arr[0]);
-				int d = Convert.ToInt32(day);
-				d = d + 1;
-				arr[0] = Convert.ToString(d);
-				Console.WriteLine(arr[0] + "/" + arr[1] + "/" + arr[2]);
-				int m = Convert.ToInt32(Console.ReadLine());
-				int y = Convert.ToInt32(Console.ReadLine());
+        {			
+            int day = 0, newday = 0, month = 0, year = 0, daysToAdd = 0;
+            int[] thirtymonths = { 4, 6, 9, 11 }; // 30 days of the months
+            int[] thirtyonemonths = { 1, 3, 5, 7, 8, 10, 12 }; // 31 days of the months
+            bool isLeapYear = false;
+            bool flag = true;
+            Console.WriteLine("Enter a date in dd/mm/yyyy format!");
+            string sourcedate = Console.ReadLine();
+            Console.WriteLine("enter a number between 1-28");
+            try { daysToAdd = Convert.ToInt32(Console.ReadLine()); } catch { Console.WriteLine("enter only number"); return; }
+            if (daysToAdd > 28 || daysToAdd < 1)
+            {
+                Console.WriteLine("number not in range");
+                return;
+            }
+            string[] datearray = sourcedate.Split('/');
+            if (datearray.Length != 3)
+                Console.WriteLine("Please enter a valid date");
+            try
+            {
+                year = Convert.ToInt32(datearray[2]);
+                if (year < 1 || year > 9999)
+                {
+                    Console.WriteLine("not a valid year");
+                    return;
+                }
+                //checking whether year is leap year
+                if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
+                    isLeapYear = true;
 
-				if (d > 0 && d < 28)    //checking for day from 0 to 27
-					d += 1;
-				if (d == 28)
-				{
-					if (m == 2) //checking for february
-					{
-						if ((y % 400 == 0) || (y % 100 != 0 || y % 4 == 0)) //leap year check in case of feb
-						{
-							d = 29;
-						}
-						else
-						{
-							d = 1;
-							m = 3;
-						}
-					}
-					else    //when its not feb
-						d += 1;
-				}
+                month = Convert.ToInt32(datearray[1]);
+                if (month < 1 || month > 12)
+                {
+                    Console.WriteLine("not a valid month");
+                    return;
+                }
+                day = Convert.ToInt32(datearray[0]);
+                if (day < 1 || day > 31)
+                {
+                    Console.WriteLine("not a valid day");
+                    return;
+                }
+                if (isLeapYear && month == 2 && day > 29)
+                {
+                    Console.WriteLine("day is wrong");
+                    return;
+                }
+                if (!isLeapYear && month == 2 && day > 28)
+                {
+                    Console.WriteLine("wrong day");
+                    return;
+                }
 
-				Console.WriteLine("New date:{0}/{1}/{2}", d, m, y);
-				Console.ReadLine();
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("Please enter values in dd/mm/yyyy format");
+                newday = day + daysToAdd;
+                if (Array.Exists(thirtymonths, element => element == month) && newday > 30)
+                {
+                    day = newday - 30;
+                    month++;
+                    flag = false;
+                }
 
-			}
-		}
+                if (day > 30 && Array.Exists(thirtymonths, x => x == month))
+                {
+                    Console.WriteLine("wrong day");
+                    return;
+
+                }
+
+                if (month == 2 && isLeapYear && newday > 29)
+                {
+                    day = newday - 29;
+                    month++;
+                    flag = false;
+                }
+                if (month == 2 && !isLeapYear && newday > 28)
+                {
+                    day = newday - 28;
+                    month++;
+                    flag = false;
+                }
+                if (flag && Array.Exists(thirtyonemonths, element => element == month) && newday > 31)
+                {
+                    day = newday - 31;
+                    month++;
+                    flag = false;
+                }
+                if (flag) { day = newday; }
+                if (month > 12)
+                {
+                    year++;
+                    month = 1;
+                }
+                Console.WriteLine($"{day}/{month}/{year}");
+                Console.ReadLine();
+            }
+            catch (Exception) { Console.WriteLine("Please Enter Date Format dd/mm/yyyy"); }
+        }
     }
 }

@@ -1,7 +1,6 @@
 C:\Users\HP\source\repos\DataApplication\DataApplication\bin\Debug\DataApplication.exe.config
 C:\Users\HP\source\repos\DataApplication\DataApplication\bin\Debug\DataApplication.exe
 C:\Users\HP\source\repos\DataApplication\DataApplication\bin\Debug\DataApplication.pdb
-C:\Users\HP\source\repos\DataApplication\DataApplication\obj\Debug\DataApplication.csprojAssemblyReference.cache
 C:\Users\HP\source\repos\DataApplication\DataApplication\obj\Debug\DataApplication.csproj.CoreCompileInputs.cache
 C:\Users\HP\source\repos\DataApplication\DataApplication\obj\Debug\DataApplication.exe
 C:\Users\HP\source\repos\DataApplication\DataApplication\obj\Debug\DataApplication.pdb
